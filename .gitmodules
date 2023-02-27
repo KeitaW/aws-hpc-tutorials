@@ -1,3 +1,6 @@
 [submodule "themes/hugo-theme-learn"]
 	path = themes/hugo-theme-learn
 	url = https://github.com/matcornic/hugo-theme-learn.git
+[submodule "content/10-diffusion-on-parallelcluster/drafts/2-train/DiT"]
+	path = content/10-diffusion-on-parallelcluster/drafts/2-train/DiT
+	url = https://github.com/facebookresearch/DiT.git
