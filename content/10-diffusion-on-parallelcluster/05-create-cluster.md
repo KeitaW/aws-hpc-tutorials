@@ -12,5 +12,67 @@ Set the custom actions install script URL to the S3 path with the Conda configur
 keypair:
 https://www.hpcworkshops.com/03-parallel-cluster-cli/05-key-pair-create.html
 
+```
+# create the cluster configuration
+export IFACE=$(curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/)
+export SUBNET_ID=$(curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/${IFACE}/subnet-id)
+export VPC_ID=$(curl --silent http://169.254.169.254/latest/meta-data/network/interfaces/macs/${IFACE}/vpc-id)
+export AZ=$(curl http://169.254.169.254/latest/meta-data/placement/availability-zone)
+export REGION=${AZ::-1}
+```
 
 
+```
+cat > ml-config.yaml << EOF
+Region: ${REGION}
+Image:
+  Os: alinux2
+SharedStorage:
+  - MountDir: /shared
+    Name: default-ebs
+    StorageType: Ebs
+
+  - Name: fsxshared
+    StorageType: FsxLustre
+    MountDir: /lustre
+    FsxLustreSettings:
+      StorageCapacity: 1200
+      ImportPath: s3://sd-workshop-${BUCKET_POSTFIX}
+      DeploymentType: SCRATCH_2
+
+HeadNode:
+  InstanceType: c5n.2xlarge
+  Networking:
+    SubnetId: ${SUBNET_ID}
+  Ssh:
+    KeyName: ${AWS_KEYPAIR}
+  Dcv:
+    Enabled: true
+
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: compute
+      ComputeResources:
+      - Name: p4d24xlarge
+        InstanceType: p4d.24xlarge
+        MinCount: 0
+        MaxCount: 4
+        DisableSimultaneousMultithreading: true
+        Efa:
+          Enabled: true
+      CapacityType: SPOT
+      CustomActions:
+        OnNodeConfigured:
+          Script: s3://sd-workshoop-${BUCKET_POSTFIX}/post-install.sh
+      Iam:
+        S3Access:
+          - BucketName: sd-workshop-${BUCKET_POSTFIX}
+      Networking:
+        SubnetIds:
+          - ${SUBNET_ID}
+        PlacementGroup:
+          Enabled: true
+EOF
+
+```

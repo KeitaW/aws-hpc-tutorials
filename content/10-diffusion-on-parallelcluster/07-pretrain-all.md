@@ -42,3 +42,14 @@ cd /lustre
 sbatch job.slurm
 ```
 
+
+```
+#!/bin/bash
+python scripts/txt2img.py \
+    --prompt 'robotic cat with wings' \
+    --outdir '/lustre/outputs/generated_pokemon' \
+    --H 512 --W 512 \
+    --n_samples 4 \
+    --config '/shared/configs/stable-diffusion/pokemon.yaml' \
+    --ckpt 'logs/2022-09-02T06-46-25_pokemon_pokemon/checkpoints/epoch=000142.ckpt'
+```
