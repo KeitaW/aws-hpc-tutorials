@@ -17,9 +17,16 @@ CUDA_DIRECTORY=/usr/local/cuda
 EFA_DIRECTORY=/opt/amazon/efa
 OPENMPI_DIRECTORY=/opt/amazon/openmpi
 STABLE_DIFFUSION_DIR=/shared/stable-diffusion
+DIFFUSERS_DIR=/shared/diffusers
 
-pip install 
-if [ ! -d "\$FAIRSEQ_DIRECTORY" ]; then
+if [ ! -d "\$DIFFUSERS" ]; then
+    # control will enter here if $DIRECTORY doesn't exist.
+    echo "Stable diffusion repository not found. Installing..."
+    pip install git+https://github.com/huggingface/diffusers \$DIFFUSERS_DIR
+    pip install -U -r \$DIFFUSERS_DIR/examples/dreambooth/requirements.txt
+fi
+
+if [ ! -d "\$STABLE_DIFFUSION_DIR" ]; then
     # control will enter here if $DIRECTORY doesn't exist.
     echo "Stable diffusion repository not found. Installing..."
     git clone https://github.com/justinpinkney/stable-diffusion.git \$STABLE_DIFFUSION_DIR
@@ -34,7 +41,7 @@ chown -R ec2-user:ec2-user /shared
 EOF
 
 # upload to your bucket
-aws s3 cp post-install.sh s3://mlbucket-${BUCKET_POSTFIX}/post-install.sh
+aws s3 cp post-install.sh s3://sd-workshop-${BUCKET_POSTFIX}/post-install.sh
 
 # delete local copies
 rm -rf post-install.sh

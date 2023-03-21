@@ -41,3 +41,31 @@ Build 'amazon-ebs.aws-pcluster-ami' finished after 22 minutes 39 seconds.
 ap-northeast-1: ami-017805b778e2c7557
 ```
 
+```
+pcluster build-image --image-id IMAGE_ID --image-configuration IMAGE_CONFIG.yaml --region REGION
+{
+ "image": {
+   "imageId": "IMAGE_ID",
+   "imageBuildStatus": "BUILD_IN_PROGRESS",
+   "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+   "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
+   "region": "us-east-1",
+   "version": "3.5.0"
+ }
+}
+```
+
+
+```
+pcluster build-image --image-id IMAGE_ID --image-configuration IMAGE_CONFIG.yaml --region REGION
+    {
+ "image": {
+   "imageId": "IMAGE_ID",
+   "imageBuildStatus": "BUILD_IN_PROGRESS",
+   "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+   "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
+   "region": "us-east-1",
+   "version": "3.5.0"
+ }
+}
+```
