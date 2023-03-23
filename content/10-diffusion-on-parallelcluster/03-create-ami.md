@@ -11,6 +11,7 @@ git checkout mbp_packer-1.8.6_ansible-core-2.14.3
 packer init .
 ```
 
+Open `packer-ami.pkr.hcl`, and change the subnet to one of the public subnets in the default VPC. Also note that the `instance_type` is set to `g4dn.12xlarge`, so make sure the account has this limit configured.
 
 ```
 make ami_gpu
