@@ -13,6 +13,8 @@ packer init .
 
 Open `packer-ami.pkr.hcl`, and change the `aws_region` to the region where you want the AMI to be build and appera, the `aws_subnet` variable to one of the public subnets in the default VPC (or any other VPC of your choice). Also note that the `instance_type` is set to `g4dn.12xlarge`, so make sure the account has this limit configured.
 
+Additionally, from a Cloud9 alinux2 instance, remove the last line in `packer-ami.pkr.hcl` which looks like `extra_arguments = [ "--scp-extra-args", "'-O'" ]`.
+
 ```
 make ami_gpu
 ```
