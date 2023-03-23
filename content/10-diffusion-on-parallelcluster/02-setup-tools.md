@@ -13,7 +13,7 @@ sudo yum -y install packer
 ```
 pip install ansible
 ```
-* pcluster-related
+* pcluster-related ([reference](https://docs.aws.amazon.com/parallelcluster/latest/ug/install-v3-pip.html))
 
 ```
 pip install aws-parallelcluster
