@@ -2,7 +2,7 @@
 
 ```
 git clone https://github.com/aws-samples/parallelcluster-efa-gpu-preflight-ami.git && \
-cd parallelcluster-efa-gpu-preflight-ami.git
+cd parallelcluster-efa-gpu-preflight-ami
 git checkout mbp_packer-1.8.6_ansible-core-2.14.3
 ```
 
